@@ -18,6 +18,8 @@ from operator import itemgetter
 from pyquery import PyQuery as pq
 
 
+NUM_TESTS = 10
+
 def err(msg):
     print(msg, file=sys.stderr)
 
@@ -47,8 +49,6 @@ def format_report(lines):
         Time after last integration test: {time_after_last}
         Test count: {count}
 
-        Debug: {first} {last}
-
         Slowest tests:
     """.format(
         elapsed=end.timestamp - start.timestamp,
@@ -56,16 +56,14 @@ def format_report(lines):
         time_to_first=lines[first].timestamp - start.timestamp,
         time_after_last=end.timestamp - lines[last].timestamp,
         count=len(times),
-        sum_times=timedelta(seconds=int(sum(times))),
-        first=first,
-        last=last,
+        sum_times=timedelta(seconds=int(sum(e[0] for e in times))),
     )) + format_slowest(times))
 
 
-def format_slowest(times, n=30):
+def format_slowest(times, n=NUM_TESTS):
     return "\n".join(
         " " * 3 + e[1].rstrip() for e in
-        sorted(times.items(), key=itemgetter(0), reverse=True)[:n],
+        sorted(times, key=itemgetter(0), reverse=True)[:n],
     )
 
 
@@ -78,7 +76,7 @@ def test_times(lines):
             err("Not a test line: %s" % line.text.rstrip())
             return 0, ""
         return decimal.Decimal(parts[-1][:-1]), line.text
-    return dict(map(get_time, lines))
+    return map(get_time, lines)
 
 
 def find_first_test_line(lines):
