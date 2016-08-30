@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+. hack/make/.integration-test-helpers
+
+TESTFLAGS="-check.f $1" bundle_test_integration_cli

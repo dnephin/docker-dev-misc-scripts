@@ -1,0 +1,14 @@
+#!/bin/bash
+set -ex
+
+ROOT=/tmp/dockerdev
+mkdir -p $ROOT
+
+bundle=bundles/latest/binary-daemon
+export PATH=$PWD/$bundle:$PATH
+
+dockerd -D \
+    --exec-root $ROOT \
+    --graph $ROOT \
+    --pidfile $ROOT/docker.pid \
+    -H 0.0.0.0:3838

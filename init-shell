@@ -1,0 +1,6 @@
+#!/bin/bash
+
+go get github.com/dnephin/filewatcher
+
+export DOCKER_INCREMENTAL_BINARY=1
+export KEEPBUNDLE=1
