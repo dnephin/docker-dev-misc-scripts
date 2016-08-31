@@ -5,7 +5,7 @@ set -e
 PR=$1
 
 if [ -z "$PR" ]; then
-    >&2 echo "Usage: $0 PR_NUMBER"
+    >&2 echo "Usage: $0 JENKINS_BUILD_NUMBER"
     exit 1
 fi
 

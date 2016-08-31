@@ -31,6 +31,8 @@ def get_lines(stream):
         entry = pq(line)
         timestamp = entry('span.timestamp b').text()
         text = entry.contents()[1]
+        if hasattr(text, 'text'):
+            text = text.text
         timestamp = datetime.strptime(timestamp, "%H:%M:%S")
         return Entry(timestamp, text)
     return map(get_line, stream)
@@ -45,7 +47,7 @@ def format_report(lines):
         Elapsed: {elapsed}
         Elapsed integration suite: {elapsed_suite}
         Sum test times: {sum_times}
-        Time to first integration test: {time_to_first} 
+        Time to first integration test: {time_to_first}
         Time after last integration test: {time_after_last}
         Test count: {count}
 
@@ -70,13 +72,13 @@ def format_slowest(times, n=NUM_TESTS):
 def test_times(lines):
     def get_time(line):
         if line.text.startswith("SKIP:"):
-            return 0, ""
+            return None
         parts = line.text.split(None, 4)
         if len(parts) != 4:
             err("Not a test line: %s" % line.text.rstrip())
-            return 0, ""
+            return None
         return decimal.Decimal(parts[-1][:-1]), line.text
-    return map(get_time, lines)
+    return filter(None, map(get_time, lines))
 
 
 def find_first_test_line(lines):
@@ -101,7 +103,6 @@ def main():
 
     format_report(lines)
 
-    
 
 if __name__ == "__main__":
     main()
