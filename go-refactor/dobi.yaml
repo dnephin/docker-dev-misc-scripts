@@ -1,0 +1,8 @@
+
+meta:
+    project: go-refactor
+
+image=refactor:
+    image: dnephin/go-refactor
+    context: .
+    tags: ['dev']
