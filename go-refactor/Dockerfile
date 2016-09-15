@@ -1,7 +1,13 @@
 
 FROM    golang:1.6-alpine
 
-RUN     apk add -U git bash
+RUN     apk add -U git \
+            bash \
+            musl-dev \
+            linux-headers \
+            gcc \
+            btrfs-progs-dev \
+            lvm2-dev
 
 RUN     go get golang.org/x/tools/cmd/gomvpkg && \
         go get golang.org/x/tools/cmd/gorename && \
@@ -11,6 +17,5 @@ RUN     go get golang.org/x/tools/cmd/gomvpkg && \
         mv /go/bin/* /usr/local/bin && \
         rm -rf /go/src/* /go/pkg/* /go/bin/*
 
-ENV     CGO_ENABLED=0
 ENV     GOPATH=/go:/go/src/github.com/docker/docker/vendor
 WORKDIR /go/src/github.com/docker/docker/

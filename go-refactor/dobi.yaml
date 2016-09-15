@@ -1,8 +1,12 @@
 
 meta:
     project: go-refactor
+    default: build
 
 image=refactor:
     image: dnephin/go-refactor
     context: .
     tags: ['dev']
+
+alias=build:
+    tasks: [refactor]
