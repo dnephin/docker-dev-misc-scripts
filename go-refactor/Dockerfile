@@ -14,6 +14,7 @@ RUN     go get golang.org/x/tools/cmd/gomvpkg && \
         go get golang.org/x/tools/cmd/eg && \
         go get golang.org/x/tools/cmd/callgraph && \
         go get golang.org/x/tools/cmd/guru && \
+        go get golang.org/x/tools/cmd/fiximports && \
         mv /go/bin/* /usr/local/bin && \
         rm -rf /go/src/* /go/pkg/* /go/bin/*
 
