@@ -7,8 +7,10 @@ mkdir -p $ROOT
 bundle=bundles/latest/binary-daemon
 export PATH=$PWD/$bundle:$PATH
 
-dockerd -D \
+dockerd \
     --exec-root $ROOT \
     --graph $ROOT \
     --pidfile $ROOT/docker.pid \
+    --experimental \
+    --log-level debug \
     -H 0.0.0.0:3838

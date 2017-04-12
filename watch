@@ -9,5 +9,6 @@ filewatcher \
     -x docs \
     -x dist \
     -x bundles \
+    -x .idea \
     -- \
     misc/test-unit './${dir}'
